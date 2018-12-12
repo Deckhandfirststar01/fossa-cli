@@ -7,6 +7,7 @@ import (
 	"github.com/fossas/fossa-cli/analyzers/bower"
 	"github.com/fossas/fossa-cli/analyzers/carthage"
 	"github.com/fossas/fossa-cli/analyzers/cocoapods"
+	"github.com/fossas/fossa-cli/analyzers/debian"
 	"github.com/fossas/fossa-cli/analyzers/golang"
 	"github.com/fossas/fossa-cli/analyzers/gradle"
 	"github.com/fossas/fossa-cli/analyzers/maven"
@@ -16,7 +17,6 @@ import (
 	"github.com/fossas/fossa-cli/analyzers/python"
 	"github.com/fossas/fossa-cli/analyzers/ruby"
 	"github.com/fossas/fossa-cli/analyzers/scala"
-
 	"github.com/fossas/fossa-cli/module"
 )
 
@@ -29,6 +29,7 @@ func Discover(dir string, options map[string]interface{}) ([]module.Module, erro
 		bower.Discover,
 		carthage.Discover,
 		cocoapods.Discover,
+		debian.Discover,
 		php.Discover,
 		golang.Discover,
 		gradle.Discover,
