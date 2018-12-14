@@ -50,7 +50,15 @@ type SignedURL struct {
 // Since this will be running within CI machines, this is probably not a good
 // idea. (See https://circleci.com/docs/2.0/configuration-reference/#resource_class
 // for an example of our memory constraints.)
-func UploadTarball(dir string) (Locator, error) {
+func UploadTarballDependency(dir string) (Locator, error) {
+	return UploadTarball(dir, true)
+}
+
+func UploadTarballProject(dir string) (Locator, error) {
+	return UploadTarball(dir, false)
+}
+
+func UploadTarball(dir string, dependency bool) (Locator, error) {
 	p, err := filepath.Abs(dir)
 	name := filepath.Base(p)
 	if err != nil {
@@ -131,7 +139,12 @@ func UploadTarball(dir string) (Locator, error) {
 	if err != nil {
 		return Locator{}, err
 	}
-	_, _, err = Post(ComponentsBuildAPI, data)
+
+	dep := url.Values{}
+	if dependency {
+		dep.Add("dependency", "true")
+	}
+	_, _, err = Post(ComponentsBuildAPI+"?"+dep.Encode(), data)
 	if err != nil {
 		return Locator{}, err
 	}
